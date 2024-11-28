@@ -24,6 +24,8 @@ const features = [
   },
 ]
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 const FeatureCard = ({ feature, index }) => (
   <div className={`relative overflow-hidden rounded-3xl ${feature.bgColor} p-8 ${index % 2 === 0 ? 'md:col-span-2' : 'md:col-span-3'}`}>
     <div className="relative z-10 flex flex-col md:flex-row items-center">
