@@ -140,7 +140,6 @@ export default function BusinessPricing() {
 
                                     <Link href="/signup">
                                         <Button
-                                            variant={plan.buttonVariant}
                                             className="w-full rounded-full"
                                         >
                                             Get Started Now
