@@ -1,13 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, Plus, Play } from 'lucide-react'
 import Image from 'next/image'
+import axiosInstance from "@/utils/axios";
 
 export default function HeroSection() {
     const [selectedDate] = useState(new Date())
+
+    useEffect(() => {
+        console.log("dsadasd")
+        axiosInstance.get("/products")
+            .then(response=>console.log(response.data))
+            .catch(console.error)
+    }, []);
 
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-50">
