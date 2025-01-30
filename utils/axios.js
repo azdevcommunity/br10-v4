@@ -5,44 +5,44 @@ const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
-
-axiosInstance.interceptors.request.use(
-    (config) => {
-        const token = Cookies.get('access_token');
-        if (token) {
-            // Only add Content-Type if it's not explicitly set (e.g., for multipart/form-data)
-            config.headers = {
-                ...config.headers,
-                Authorization: `Bearer ${token}`,
-            };
-
-            if (!config.headers['Content-Type']) {
-                config.headers['Content-Type'] = 'application/json';
-            }
-        }
-        console.log('Final headers:', config.headers); // Verify the headers
-        return config;
-    },
-    (error) => Promise.reject(error)
-);
-
-
-axiosInstance.interceptors.response.use(((response) => response),
-    async (error) => {
-        if (error.response && error.response.status === 401) {
-            try {
-                const newToken = await refreshToken()
-
-                axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-                const originalRequest = error.config;
-                originalRequest.headers ['Authorization'] = `Bearer ${newToken}`;
-                return axios(originalRequest);
-            } catch (e) {
-                return Promise.reject(e);
-            }
-        }
-        return Promise.reject(error);
-    });
+//
+// axiosInstance.interceptors.request.use(
+//     (config) => {
+//         const token = Cookies.get('access_token');
+//         if (token) {
+//             // Only add Content-Type if it's not explicitly set (e.g., for multipart/form-data)
+//             config.headers = {
+//                 ...config.headers,
+//                 Authorization: `Bearer ${token}`,
+//             };
+//
+//             if (!config.headers['Content-Type']) {
+//                 config.headers['Content-Type'] = 'application/json';
+//             }
+//         }
+//         console.log('Final headers:', config.headers); // Verify the headers
+//         return config;
+//     },
+//     (error) => Promise.reject(error)
+// );
+//
+//
+// axiosInstance.interceptors.response.use(((response) => response),
+//     async (error) => {
+//         if (error.response && error.response.status === 401) {
+//             try {
+//                 const newToken = await refreshToken()
+//
+//                 axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+//                 const originalRequest = error.config;
+//                 originalRequest.headers ['Authorization'] = `Bearer ${newToken}`;
+//                 return axios(originalRequest);
+//             } catch (e) {
+//                 return Promise.reject(e);
+//             }
+//         }
+//         return Promise.reject(error);
+//     });
 
 const refreshToken = async () => {
     console.log('refreshToken is calling');
