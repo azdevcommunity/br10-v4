@@ -23,17 +23,16 @@ export default function LoginForm() {
         console.log("Logging in user:", credentials)
 
         // API çağrısını simüle et
-        const data = (await
-                axiosInstance.post("/auth/login", {
-                    phoneNumberOrUsername: credentials.phoneNumberOrUsername,
-                    password: credentials.password,
-                    deviceInfo: deviceInfo
-                })
-        ).data
+        const response = await  axiosInstance.post("/auth/login", {
+            phoneNumberOrUsername: credentials.phoneNumberOrUsername,
+            password: credentials.password,
+            deviceInfo: deviceInfo
+        })
 
-        Cookies.set('access_token', data.accessToken);
-        Cookies.set('refresh_token', data.refreshToken);
+        console.log(response.data.data)
 
+        Cookies.set('access_token', response.data.data.accessToken);
+        Cookies.set('refresh_token', response.data.data.refreshToken);
 
         // Demo amaçlı, her zaman başarılı dön
         // Gerçek uygulamada burada API'den dönen cevaba göre işlem yapmalısınız
@@ -55,7 +54,7 @@ export default function LoginForm() {
         try {
             const result = await loginUser(credentials)
             if (result.success) {
-                router.push("/dashboard") // Başarılı girişten sonra dashboard'a yönlendir
+                router.push("/") // Başarılı girişten sonra dashboard'a yönlendir
             } else {
                 setError("Login failed. Please check your credentials.")
             }

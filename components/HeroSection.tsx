@@ -15,6 +15,17 @@ export default function HeroSection() {
         axiosInstance.get("/products")
             .then(response=>console.log(response.data))
             .catch(console.error)
+
+        // fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json', // Fix: Correct header name
+        //     },
+        //     body: JSON.stringify({
+        //         refreshToken: "eyJhbGciOiJIUzI1NiJ9.eyJVU0VSX0lEIjoxMywiVE9LRU5fSUQiOjIzMzM1MCwiREVWSUNFX0lEIjo1LCJzdWIiOiIwNzA1ODE5OTE1IiwiaWF0IjoxNzM4MjM1OTgxLCJleHAiOjE3MzgzMjIzODF9.1XZ9_o5HxIwT6pyX3m0P3chtAcSTXoEB6H9ofn9M5cw"
+        //     }),
+        // }).then(res => res.json())
+        //     .then(c=>console.log(c))
     }, []);
 
     return (
