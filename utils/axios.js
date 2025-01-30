@@ -62,14 +62,7 @@ const refreshToken = async () => {
 };
 
 
-const login = (userData: {
-    expires_in: number;
-    access_token: string;
-    refresh_token: string;
-    token_type: string;
-    role: string;
-    company_id: string;
-}) => {
+const login = (userData) => {
     const expirationTime = Date.now() + userData.expires_in * 1000;
 
     Cookies.set('access_token', userData.access_token);
