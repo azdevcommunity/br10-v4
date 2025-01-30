@@ -20,7 +20,6 @@ axiosInstance.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-
 axiosInstance.interceptors.response.use(((response) => response),
     async (error) => {
         if (error.response && error.response.status === 401) {
@@ -37,7 +36,6 @@ axiosInstance.interceptors.response.use(((response) => response),
         }
         return Promise.reject(error);
     });
-
 
 const refreshToken = async () => {
     const refreshToken = Cookies.get('refresh_token');
