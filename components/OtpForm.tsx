@@ -1,51 +1,21 @@
 "use client"
 
 import {useState} from "react"
-import {useRouter} from "next/navigation"
 import Link from "next/link"
 import {Button} from "@/components/ui/button"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
-import axiosInstance from "@/utils/axios";
-import {LocalStorageUtil} from "@/utils/localStorageUtil";
-import {deviceInfo} from "@/utils/deviceinfo";
-import Cookies from "js-cookie";
 
-export default function OtpForm() {
+interface OtpFormProps {
+    onSubmit: (otp: string) => void
+}
+
+export default function OtpForm({ onSubmit }: OtpFormProps) {
     const [otp, setOtp] = useState("")
-    const [error, setError] = useState("")
-    const router = useRouter()
 
-    async function verifyOtp(otp: string) {
-        const request = {
-            otp: otp,
-            phoneNumber: LocalStorageUtil.getItem("register_phone_number"),
-            deviceInfo: deviceInfo
-        }
-        console.log(request)
-        const otpType = LocalStorageUtil.getItem("verify_otp_type")
-
-        if (otpType === "activate_user") {
-            const response = await axiosInstance.post("/auth/activate-user-verify-otp", request)
-            const data = response.data.data
-            Cookies.set('access_token', data.accessToken);
-            Cookies.set('refresh_token', data.refreshToken);
-            LocalStorageUtil.removeItem("verify_otp_type")
-        }
-
-
-        // ... (mevcut kod)
-        // axiosInstance.
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        try {
-            await verifyOtp(otp)
-            router.push("/")
-        } catch (error: any) {
-            setError(error?.message)
-        }
+        onSubmit(otp)
     }
 
     return (
@@ -68,8 +38,6 @@ export default function OtpForm() {
                 />
             </div>
 
-            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-
             <div>
                 <Button
                     type="submit"
@@ -81,9 +49,11 @@ export default function OtpForm() {
 
             <div className="text-center mt-4">
                 <Link href="/resend-otp" className="text-sm text-indigo-600 hover:text-indigo-500">
-                    Didn't receive the code? Resend OTP
+                    Didn&apos;t receive the code? Resend OTP
                 </Link>
             </div>
+
+            <p>We&apos;ve sent a new code to your phone.</p>
         </form>
     )
 }
