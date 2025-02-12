@@ -27,7 +27,7 @@ export default function Header() {
                         </ul>
                     </nav>
                     <div className="hidden md:block">
-                        <Button>Book Now</Button>
+                        <Link href={"/booking-confirmation"}>Book Now</Link>
                     </div>
                     <div className="md:hidden">
                         <button
